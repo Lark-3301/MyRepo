@@ -1,1 +1,7 @@
-.color {}
+h1 {color: blueviolet;}
+
+.highlight {font-weight: bold;}
+
+#header {font-style: italic;}
+
+div > p {background: #F54927}
