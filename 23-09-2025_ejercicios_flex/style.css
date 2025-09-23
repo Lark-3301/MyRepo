@@ -1,0 +1,27 @@
+body {
+    font-family: sans-serif;
+}
+
+.galeria {
+    background-color: aqua;
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap<;
+}
+
+.item {
+   font-size: 28px;
+   border: 10px;
+   padding: 10px;
+   text-align: center;
+   background-color: antiquewhite;
+}
+
+.galeria :nth-child(1){
+    order: 2;
+}
+
+.galeria :nth-child(4){
+    order: 12;
+}
