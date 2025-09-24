@@ -1,0 +1,17 @@
+.class1 {
+    background-color: #c1cfa9;
+    padding: 20px;
+    margin: 0px;
+}
+
+.class2 {
+    background-color: #d89393;
+    padding: 20px;
+    margin: 0px;
+}
+
+div {
+    font-size: 24px;
+    border: 2px  solid #000000;
+    margin: 20px;
+}
