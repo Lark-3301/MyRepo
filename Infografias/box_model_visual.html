@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Box model — Guía visual</title>
+<style>
+:root{
+  --ink:#0b1220; --muted:#94a3b8; --paper:#0b1220; --bg:#0f172a;
+  --line:#1f2a44; --soft:#0d1628;
+  --mono: ui-monospace, Menlo, Consolas, "Liberation Mono", monospace;
+  --sans: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --a:#22c55e; --b:#3b82f6; --c:#e11d48; --d:#f59e0b; --e:#06b6d4; --f:#8b5cf6;
+}
+*{ box-sizing:border-box; }
+html{ color-scheme: dark; }
+body{
+  margin:0; background: radial-gradient(1200px 800px at 20% -10%, #1e293b 0%, #0f172a 40%, #0b1220 100%);
+  color:#e5e7eb; font: 400 16px/1.6 var(--sans);
+}
+.wrap{ max-width: 1120px; margin: 0 auto; padding: 28px; }
+.header{ display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:18px; }
+h1{ margin:0; font-size: clamp(1.6rem, 2.8vw, 2.4rem); letter-spacing:.2px; }
+.lead{ color:#b8c4dd; margin:.25rem 0 0 0; max-width: 70ch; }
+.btn{
+  background: linear-gradient(135deg, var(--a), var(--b)); color:#021018;
+  border:none; padding:.7rem 1rem; border-radius:999px; font-weight:800; cursor:pointer;
+  box-shadow: 0 10px 24px -12px rgba(34,197,94,.6), 0 10px 24px -12px rgba(59,130,246,.6);
+}
+.grid{ display:grid; grid-template-columns: 280px 1fr; gap:18px; }
+@media (max-width: 980px){ .grid{ grid-template-columns: 1fr; } nav{ position: static; top:auto; } }
+
+nav{
+  position: sticky; top: 12px;
+  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+  border:1px solid var(--line); border-radius:16px; padding:16px;
+  box-shadow: 0 18px 38px -22px rgba(10,10,10,.75), inset 0 1px 0 rgba(255,255,255,.06);
+  backdrop-filter: blur(6px);
+}
+nav h3{ margin:.2rem 0 .4rem 0; font-size:1rem; color:#cfe0ff; }
+nav a{ display:block; color:#c0ccef; text-decoration:none; padding:.35rem .5rem; border-radius:10px; }
+nav a:hover{ background:#0d1a2f; }
+
+.section{
+  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+  border:1px solid var(--line); border-radius:16px; padding:18px;
+  box-shadow: 0 18px 38px -22px rgba(10,10,10,.75), inset 0 1px 0 rgba(255,255,255,.06);
+  backdrop-filter: blur(6px);
+}
+.section h2{ font-size:1.35rem; margin:.1rem 0 .4rem 0; }
+.section .desc{ color:var(--muted); margin-top:-.35rem; }
+
+h3{ margin: .9rem 0 .35rem; font-size:1.05rem; color:#eaf1ff; }
+
+pre, code{ font-family: var(--mono); }
+pre.code{
+  background: #0b1b33; border:1px solid #0e2345; border-radius:12px; padding:.8rem; overflow:auto; font-size:.95rem; color:#dbf1ff;
+  box-shadow: inset 0 0 40px rgba(0,0,0,.25);
+}
+.diagram{
+  background: linear-gradient(180deg, rgba(6,182,212,.08), transparent);
+  border:1px solid #233257; border-radius:14px; padding:12px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.05);
+}
+.badge{ display:inline-block; background:#0e223f; color:#bbd3ff; border:1px solid #26406e; padding:.15rem .5rem; border-radius:999px; font-weight:800; font-size:.8rem; }
+.note{ color:#a8b3cf; font-size:.92rem; }
+
+/* (1) Box Model core diagram */
+.layers{ max-width:600px; margin: 0 auto; background:#0c1629; border-radius:14px; padding:10px; border:1px dashed #284071; }
+.layer{ position:relative; border-radius:12px; padding:10px; margin: 10px; }
+.layer.margin{ background: color-mix(in srgb, var(--d) 10%, #0c1629); border:1px solid color-mix(in srgb, var(--d) 55%, var(--line)); }
+.layer.border{ background: color-mix(in srgb, var(--b) 8%, #0c1629); border:1px solid color-mix(in srgb, var(--b) 55%, var(--line)); }
+.layer.padding{ background: color-mix(in srgb, var(--a) 10%, #0c1629); border:1px dashed color-mix(in srgb, var(--a) 55%, var(--line)); }
+.layer.content{ background:#0b1b33; border:1px solid #0e2345; text-align:center; font-weight:900; color:#d7f3ff; }
+.tag{ position:absolute; top:-10px; left:14px; background:#0e1628; border:1px solid #274170; color:#cfeaff; font-size:.75rem; border-radius:999px; padding:.08rem .5rem; }
+.tag strong{ color:#fff; }
+
+/* (2) Tamaño */
+.size-demo{ display:grid; grid-template-columns:1fr; gap:10px; }
+.bar{ margin:0 auto; height:46px; display:flex; align-items:center; justify-content:center; border-radius:12px; background: #0b1b33; border:1px solid #0e2345; color:#cfeaff; }
+.minmax{ width: clamp(240px, 60%, 780px); }
+.fixed{ width: 420px; }
+
+/* (3) Margin vs Padding */
+.mp-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+.cardx{ background:#0b1b33; border:1px solid #0e2345; border-radius:12px; padding:10px; }
+.box{ background:#0f2547; border:1px solid #1f3b6a; border-radius:10px; color:#cfeaff; }
+.box.pad{ padding:14px; }
+.box.marg{ margin:14px; }
+.stack{ display:grid; gap:8px; }
+.collapse-demo{ padding:8px; background:#08172e; border:1px dashed #203b69; border-radius:12px; }
+.c1,.c2{ height:34px; background:#0f2547; border:1px solid #1f3b6a; border-radius:10px; }
+.c1{ margin-bottom: 24px; }
+.c2{ margin-top: 24px; }
+.hint{ font-size:.88rem; color:#b8c4dd; }
+
+/* (4) Border & radius */
+.radius-row{ display:flex; gap:10px; }
+.radius{ width:72px; height:72px; border-radius:14px; background: linear-gradient(180deg, #143057, #0e2646); border:1px solid #2b4677; }
+.r2{ border-radius:30px; }
+.r3{ border-radius:999px; }
+.border-line{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+.b-demo{ width:120px; height:52px; display:flex; align-items:center; justify-content:center; border-radius:10px; background:#0b1b33; color:#cfeaff; }
+.b1{ border:4px solid #49b9ff; }
+.b2{ border:4px dashed #49b9ff; }
+.b3{ border:4px double #49b9ff; }
+
+/* (5) box-sizing */
+.bs-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.bs{ background:#0b1b33; border:1px solid #0e2345; border-radius:12px; padding:10px; }
+.bs .wrap{ display:grid; grid-template-columns: 1fr; gap:10px; }
+.box-ct{ width:260px; padding:20px; border:6px solid #49b9ff; border-radius:12px; background:#0f2547; color:#cfeaff; }
+.content-box{ box-sizing: content-box; }
+.border-box{ box-sizing: border-box; }
+.note-mini{ font-size:.85rem; color:#b8c4dd; }
+
+/* (6) overflow & outline */
+.overflow-grid{ display:grid; grid-template-columns: repeat(5,1fr); gap:10px; }
+.of{ width:100%; height:92px; border:1px solid #0e2345; border-radius:12px; background:#0b1b33; padding:8px; color:#d6eeff; }
+.of .long{ white-space: nowrap; }
+.of.visible{ overflow: visible; }
+.of.hidden{ overflow: hidden; }
+.of.scroll{ overflow: scroll; }
+.of.auto{ overflow: auto; }
+.of.clip{ overflow: clip; }
+
+.outline-demo{ display:flex; gap:14px; align-items:center; flex-wrap:wrap; }
+.btnx{ padding:.6rem 1rem; border-radius:999px; background: linear-gradient(135deg, var(--e), var(--f)); color:#04121c; font-weight:900; border:none; }
+.btnx:focus{ outline: 3px solid #fff; outline-offset: 3px; }
+.linkx{ color:#9ad8ff; text-decoration: none; padding:.2rem .3rem; border-radius:6px; }
+.linkx:focus{ outline: 2px solid #9ad8ff; outline-offset: 2px; background:#0d1f36; }
+
+/* helpers */
+.kbd{ border:1px solid #2c3e67; background:#102142; padding:.1rem .4rem; border-radius:6px; font-family:var(--mono); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div>
+      <h1>Box model</h1>
+      <p class="lead">Las capas que forman cada caja en CSS y cómo afectan al tamaño, espacios y desbordes: <strong>Tamaño</strong> (<code>width/height</code>, <code>min/max-*</code>), <strong>Espacios</strong> (<code>margin</code>, <code>padding</code>), <strong>Borde</strong> (<code>border</code>, <code>border-radius</code>), <strong>Caja</strong> (<code>box-sizing</code>) y <strong>Desbordes</strong> (<code>overflow</code>, <code>outline</code>).</p>
+    </div>
+    <button class="btn" onclick="window.print()">Imprimir / PDF</button>
+  </div>
+
+  <div class="grid">
+    <nav>
+      <h3>Índice</h3>
+      <a href="#core">1. Esquema del Box Model</a>
+      <a href="#size">2. Tamaño: width/height y min/max-*</a>
+      <a href="#mp">3. Espacios: margin vs padding (y colapso)</a>
+      <a href="#border">4. Borde y border-radius</a>
+      <a href="#bs">5. Caja: box-sizing: border-box</a>
+      <a href="#overflow">6. Desbordes: overflow y outline</a>
+      <a href="#snippets">7. Snippets útiles</a>
+    </nav>
+
+    <main class="stack">
+      <!-- 1) Core diagram -->
+      <section id="core" class="section">
+        <h2>1) Esquema del Box Model</h2>
+        <p class="desc">Una caja está compuesta por <span class="badge">content</span> → <span class="badge">padding</span> → <span class="badge">border</span> → <span class="badge">margin</span>. El <em>outline</em> es un contorno externo para accesibilidad que no ocupa espacio.</p>
+        <div class="diagram layers">
+          <div class="layer margin">
+            <span class="tag"><strong>margin</strong></span>
+            <div class="layer border">
+              <span class="tag"><strong>border</strong></span>
+              <div class="layer padding">
+                <span class="tag"><strong>padding</strong></span>
+                <div class="layer content">
+                  Content
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2) Tamaño -->
+      <section id="size" class="section">
+        <h2>2) Tamaño: <code>width</code>, <code>height</code>, <code>min/max-*</code></h2>
+        <p class="desc"><code>width/height</code> definen el tamaño preferido. Con <code>min-*</code> y <code>max-*</code> marcas límites flexible/fluido.</p>
+        <div class="diagram size-demo">
+          <div class="bar minmax">width: clamp(240px, 60%, 780px)</div>
+          <div class="bar fixed">width: 420px</div>
+        </div>
+        <pre class="code">.box { width: 420px; height: 160px; }
+.box-fluid { width: clamp(240px, 60%, 780px); min-height: 120px; max-height: 70vh; }</pre>
+      </section>
+
+      <!-- 3) Margin vs Padding -->
+      <section id="mp" class="section">
+        <h2>3) Espacios: <code>margin</code> vs <code>padding</code></h2>
+        <p class="desc"><code>margin</code> es espacio externo (separa de otras cajas). <code>padding</code> es espacio interno (separa el borde del contenido).</p>
+        <div class="diagram mp-grid">
+          <div class="cardx">
+            <h3 style="margin-top:0">Padding (espacio dentro)</h3>
+            <div class="box pad">Contenido con <strong>padding</strong>: el fondo crece hacia dentro.</div>
+          </div>
+          <div class="cardx">
+            <h3 style="margin-top:0">Margin (espacio fuera)</h3>
+            <div class="box marg">Caja con <strong>margin</strong>: separa esta caja de su contenedor/hermanos.</div>
+          </div>
+        </div>
+        <div class="diagram collapse-demo" style="margin-top:10px;">
+          <div class="c1"></div>
+          <div class="c2"></div>
+          <p class="hint">Colapso de márgenes verticales: los márgenes adyacentes de elementos de bloque se “fusionan” (toma el mayor). Para evitarlo, añade <code>padding</code>, <code>border</code> o crea un nuevo contexto (p. ej., <code>overflow: auto</code> o <code>display: flow-root</code>).</p>
+        </div>
+      </section>
+
+      <!-- 4) Borde y radio -->
+      <section id="border" class="section">
+        <h2>4) Borde: <code>border</code> y <code>border-radius</code></h2>
+        <p class="desc">El borde rodea el padding y el contenido. <code>border-radius</code> puede ser circular (50%) o elíptico (usando <code>/</code> para radios separados en X/Y).</p>
+        <div class="diagram">
+          <div class="border-line" style="margin-bottom:10px;">
+            <div class="b-demo b1">solid</div>
+            <div class="b-demo b2">dashed</div>
+            <div class="b-demo b3">double</div>
+          </div>
+          <div class="radius-row">
+            <div class="radius"></div>
+            <div class="radius r2"></div>
+            <div class="radius r3"></div>
+          </div>
+        </div>
+        <pre class="code">.pill { border: 2px solid #49b9ff; border-radius: 999px; }
+.badge { border: 2px dashed #49b9ff; border-radius: 12px; }</pre>
+      </section>
+
+      <!-- 5) box-sizing -->
+      <section id="bs" class="section">
+        <h2>5) Caja: <code>box-sizing: border-box;</code></h2>
+        <p class="desc">Con <code>content-box</code> (por defecto), el ancho declarado no incluye <em>padding</em> ni <em>border</em>. Con <code>border-box</code>, el ancho anunciado <strong>sí</strong> los incluye (más predecible para layout).</p>
+        <div class="diagram bs-grid">
+          <div class="bs">
+            <h3 style="margin-top:0">content-box (default)</h3>
+            <div class="wrap">
+              <div class="box-ct content-box">width:260 + padding(20*2) + border(6*2) ➜ caja total mayor</div>
+              <p class="note-mini">El total crece al sumar padding y border.</p>
+            </div>
+          </div>
+          <div class="bs">
+            <h3 style="margin-top:0">border-box (recomendado)</h3>
+            <div class="wrap">
+              <div class="box-ct border-box">width:260 incluye padding y border ➜ caja total estable</div>
+              <p class="note-mini">Más fácil de razonar. Suele ponerse global: <code>*{ box-sizing:border-box }</code>.</p>
+            </div>
+          </div>
+        </div>
+        <pre class="code">* { box-sizing: border-box; } /* recomendado */
+.card { width: 260px; padding: 20px; border: 6px solid #49b9ff; }</pre>
+      </section>
+
+      <!-- 6) overflow & outline -->
+      <section id="overflow" class="section">
+        <h2>6) Desbordes: <code>overflow</code> y <code>outline</code></h2>
+        <p class="desc"><code>overflow</code> decide qué pasa si el contenido sobrepasa la caja. <code>outline</code> dibuja un contorno por fuera (no ocupa espacio), útil para <em>focus</em> y accesibilidad.</p>
+        <div class="diagram overflow-grid">
+          <div class="of visible"><div class="long">visible → El contenido puede sobresalir… ➜ ➜ ➜ ➜ ➜</div></div>
+          <div class="of hidden"><div class="long">hidden → Se recorta el exceso sin barras.</div></div>
+          <div class="of scroll"><div class="long">scroll → Muestra barras siempre.</div></div>
+          <div class="of auto"><div class="long">auto → Barras solo si hacen falta.</div></div>
+          <div class="of clip"><div class="long">clip → Recorte más estricto que hidden.</div></div>
+        </div>
+        <div class="diagram outline-demo" style="margin-top:10px;">
+          <button class="btnx">Botón (focus con outline)</button>
+          <a class="linkx" href="#">Enlace accesible (outline)</a>
+        </div>
+        <pre class="code">.card:focus { outline: 3px solid white; outline-offset: 4px; } /* no altera layout */
+.scroll-x { overflow-x:auto; overflow-y:hidden; }</pre>
+      </section>
+
+      <!-- 7) Snippets -->
+      <section id="snippets" class="section">
+        <h2>7) Snippets útiles</h2>
+        <pre class="code">/* Tamaño fijo vs fluido */
+.box { width: 420px; height: 160px; }
+.box-fluid { width: clamp(240px, 60%, 780px); min-height: 120px; max-height: 70vh; }
+
+/* Espacios */
+.pad { padding: 1rem; }
+.marg { margin: 1rem 0; }
+
+/* Borde y radios */
+.badge { border: 2px dashed #49b9ff; border-radius: 12px; }
+.pill  { border-radius: 999px; }
+
+/* Caja global */
+* { box-sizing: border-box; }
+
+/* Desbordes y contorno */
+.clip-1l { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.btn:focus { outline: 2px solid #fff; outline-offset: 2px; }</pre>
+      </section>
+    </main>
+  </div>
+
+  <p class="note" style="margin-top:14px;">Recuerda: <span class="kbd">margin</span> separa por fuera, <span class="kbd">padding</span> separa por dentro; el borde va entre ambos; y con <span class="kbd">border-box</span> la vida es más sencilla al dimensionar.</p>
+
+</div>
+</body>
+</html>

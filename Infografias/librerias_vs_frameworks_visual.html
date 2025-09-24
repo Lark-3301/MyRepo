@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Librerías vs Frameworks — Guía Visual para Principiantes</title>
+  <style>
+    :root{
+      --bg:#0b1220;
+      --card:#0f172a;
+      --muted:#94a3b8;
+      --text:#e5e7eb;
+      --title:#ffffff;
+      --primary:#60a5fa;
+      --secondary:#34d399;
+      --accent:#f59e0b;
+      --ring:rgba(96,165,250,.35);
+      --ok:#22c55e;
+      --warn:#f59e0b;
+      --bad:#ef4444;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:radial-gradient(1200px 700px at 20% -10%, #1e293b 20%, transparent 60%), linear-gradient(180deg, #0b1220 0%, #0b1220 100%); color:var(--text); font:16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji','Segoe UI Emoji';}
+    header{
+      padding:64px 20px 48px;
+      background:
+        radial-gradient(800px 300px at 80% 0%, rgba(52,211,153,.25) 0%, transparent 70%),
+        radial-gradient(900px 400px at 0% 20%, rgba(96,165,250,.25) 0%, transparent 70%);
+      border-bottom:1px solid rgba(148,163,184,.15);
+    }
+    .wrap{max-width:1050px;margin:0 auto;padding:0 20px}
+    h1{font-size:clamp(28px,4vw,44px);line-height:1.1;margin:0 0 10px;color:var(--title);letter-spacing:.3px}
+    .subtitle{color:var(--muted);margin:0 0 20px;font-size:clamp(16px,2.2vw,18px)}
+    .pill{display:inline-flex;gap:8px;align-items:center;background:rgba(96,165,250,.12);color:#c7d2fe;border:1px solid rgba(96,165,250,.3);padding:8px 12px;border-radius:999px;font-weight:600;font-size:13px}
+    .grid{display:grid;gap:20px}
+    .grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    @media (max-width:880px){.grid.cols-2{grid-template-columns:1fr}}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)), var(--card); border:1px solid rgba(148,163,184,.15); border-radius:16px; padding:20px; box-shadow:0 10px 30px rgba(0,0,0,.25)}
+    .card h2{margin:0 0 8px;color:#fff;font-size:22px;letter-spacing:.2px}
+    .muted{color:var(--muted)}
+    .tag{display:inline-block;padding:4px 10px;border-radius:999px;border:1px solid rgba(148,163,184,.2);color:#cbd5e1;font-size:12px;margin:4px 6px 0 0}
+    .kicker{font-weight:700;color:var(--secondary);text-transform:uppercase;letter-spacing:.14em;font-size:12px;margin-bottom:6px}
+    .note{border-left:4px solid var(--primary); padding:10px 12px; background:rgba(96,165,250,.08); border-radius:10px; font-size:14px}
+    .cmp{border:1px dashed rgba(148,163,184,.35); border-radius:14px; overflow:hidden}
+    .cmp .row{display:grid;grid-template-columns:200px 1fr 1fr}
+    .cmp .row > div{padding:12px 14px;border-bottom:1px dashed rgba(148,163,184,.25)}
+    .cmp .row.head{background:rgba(148,163,184,.08); font-weight:700}
+    .cmp .row:last-child > div{border-bottom:none}
+    .row:nth-child(even):not(.head) > div{background:rgba(148,163,184,.06)}
+    code,pre{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace}
+    pre{background:#0b1020;border:1px solid rgba(148,163,184,.2); color:#e2e8f0; padding:14px;border-radius:12px; overflow:auto}
+    .flex{display:flex;gap:16px;align-items:center}
+    .center{text-align:center}
+    .foot{margin-top:26px;color:var(--muted);font-size:13px}
+    /* small hover motion */
+    .hover-up{transition:transform .25s ease, box-shadow .25s ease}
+    .hover-up:hover{transform:translateY(-4px); box-shadow:0 16px 40px rgba(0,0,0,.35)}
+    /* SVG shared */
+    .svg-wrap{background:rgba(2,6,23,.6); border:1px solid rgba(148,163,184,.2); border-radius:14px; padding:12px}
+    .legend{display:flex;gap:10px;flex-wrap:wrap; margin-top:8px}
+    .legend .item{display:flex;gap:6px;align-items:center;color:#cbd5e1;font-size:13px}
+    .dot{width:10px;height:10px;border-radius:50%}
+    .btn{
+      display:inline-flex;align-items:center;gap:10px;
+      background:linear-gradient(135deg, rgba(96,165,250,.2), rgba(52,211,153,.2));
+      border:1px solid rgba(148,163,184,.25); color:#e2e8f0;
+      padding:10px 14px;border-radius:12px;text-decoration:none;font-weight:600
+    }
+    details{background:rgba(148,163,184,.08);border:1px solid rgba(148,163,184,.2);border-radius:12px;padding:10px 12px}
+    details summary{cursor:pointer}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <span class="pill">Guía visual • nivel principiante</span>
+      <h1>Librerías vs Frameworks</h1>
+      <p class="subtitle">Entiende la diferencia con esquemas, comparativas y una metáfora simple: <b>herramientas</b> frente a <b>taller</b>.</p>
+      <div class="legend">
+        <div class="item"><span class="dot" style="background:var(--primary)"></span> Conceptos clave</div>
+        <div class="item"><span class="dot" style="background:var(--secondary)"></span> Ejemplos</div>
+        <div class="item"><span class="dot" style="background:var(--accent)"></span> Consejos</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap" style="padding:28px 20px 50px">
+    <!-- Metáfora -->
+    <section class="grid cols-2">
+      <article class="card hover-up">
+        <div class="kicker">Metáfora</div>
+        <h2>Herramientas vs Taller</h2>
+        <p class="muted">Una <b>librería</b> es una <b>herramienta concreta</b> (como un taladro): la usas cuando quieres y como quieres. Un <b>framework</b> es un <b>taller completo</b>: tiene mesas, normas y flujo; trabajas dentro de su organización.</p>
+        <div class="svg-wrap">
+          <!-- Simple SVG illustration: drill vs workshop -->
+          <svg viewBox="0 0 900 220" width="100%" height="auto" aria-label="Herramientas vs Taller">
+            <!-- Left panel (tool) -->
+            <rect x="10" y="10" width="410" height="200" rx="14" fill="rgba(96,165,250,.15)" stroke="rgba(96,165,250,.5)"/>
+            <text x="30" y="40" fill="#cfe3ff" font-size="16" font-weight="700">Librería = Herramienta</text>
+            <!-- Drill icon -->
+            <rect x="60" y="70" width="160" height="40" rx="6" fill="#60a5fa"/>
+            <rect x="210" y="78" width="40" height="24" rx="4" fill="#1e293b" stroke="#93c5fd"/>
+            <rect x="60" y="112" width="40" height="22" rx="4" fill="#3b82f6"/>
+            <rect x="105" y="112" width="35" height="22" rx="4" fill="#3b82f6"/>
+            <rect x="145" y="112" width="35" height="22" rx="4" fill="#3b82f6"/>
+            <text x="60" y="160" fill="#e2e8f0" font-size="13">Tú decides cuándo usarla</text>
+
+            <!-- Right panel (workshop) -->
+            <rect x="480" y="10" width="410" height="200" rx="14" fill="rgba(52,211,153,.15)" stroke="rgba(52,211,153,.5)"/>
+            <text x="500" y="40" fill="#d4ffee" font-size="16" font-weight="700">Framework = Taller</text>
+            <!-- Workbench -->
+            <rect x="520" y="70" width="280" height="18" rx="3" fill="#34d399"/>
+            <rect x="540" y="88" width="18" height="60" rx="3" fill="#10b981"/>
+            <rect x="760" y="88" width="18" height="60" rx="3" fill="#10b981"/>
+            <!-- Pegboard tools -->
+            <rect x="820" y="70" width="28" height="60" rx="4" fill="#059669"/>
+            <circle cx="834" cy="86" r="3" fill="#a7f3d0"/><circle cx="834" cy="96" r="3" fill="#a7f3d0"/><circle cx="834" cy="106" r="3" fill="#a7f3d0"/>
+            <!-- Caption -->
+            <text x="520" y="170" fill="#e2e8f0" font-size="13">Trabajas dentro de su flujo y recursos</text>
+          </svg>
+        </div>
+      </article>
+
+      <!-- Definiciones rápidas -->
+      <article class="card hover-up">
+        <div class="kicker">Definiciones</div>
+        <h2>¿Qué es cada cosa?</h2>
+        <ul style="margin:0 0 8px 18px">
+          <li><b>Librería</b>: conjunto de funciones/clases que <b>tú llamas</b> cuando lo necesitas.</li>
+          <li><b>Framework</b>: esqueleto que define estructura y ciclo de vida; <b>te llama a ti</b> (Inversión de Control).</li>
+        </ul>
+        <div class="note" style="margin-top:8px">
+          <b>Idea clave:</b> una librería te da <u>piezas</u>; un framework te da <u>andamiaje y reglas</u>.
+        </div>
+        <div style="margin-top:10px">
+          <span class="tag">IoC</span>
+          <span class="tag">Convenciones</span>
+          <span class="tag">Tooling</span>
+          <span class="tag">Routing / ORM / Build</span>
+        </div>
+      </article>
+    </section>
+
+    <!-- Diagrama de Control del Flujo -->
+    <section class="card hover-up" style="margin-top:20px">
+      <div class="kicker">Esquema</div>
+      <h2>Control del flujo: ¿quién llama a quién?</h2>
+      <div class="grid cols-2">
+        <div>
+          <p class="muted"><b>Librería</b>: tu programa controla todo y usa la librería como apoyo.</p>
+          <div class="svg-wrap">
+            <svg viewBox="0 0 520 190" width="100%" height="auto" aria-label="Esquema de control del flujo con librería">
+              <rect x="20" y="25" width="190" height="50" rx="10" fill="#1f2a44" stroke="#60a5fa"/>
+              <text x="45" y="56" fill="#cfe3ff" font-size="14" font-weight="700">Tu código</text>
+              <rect x="310" y="25" width="190" height="50" rx="10" fill="#1f2a44" stroke="#60a5fa"/>
+              <text x="350" y="56" fill="#cfe3ff" font-size="14" font-weight="700">Librería</text>
+              <defs>
+                <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="#60a5fa"/>
+                </marker>
+              </defs>
+              <line x1="210" y1="50" x2="310" y2="50" stroke="#60a5fa" stroke-width="3" marker-end="url(#arrow)"/>
+              <text x="220" y="42" fill="#93c5fd" font-size="12">llama</text>
+              <rect x="20" y="110" width="480" height="50" rx="10" fill="#0b1020" stroke="rgba(148,163,184,.35)"/>
+              <text x="40" y="141" fill="#e2e8f0" font-size="13">Tú decides el orden, los tiempos y qué funciones usar</text>
+            </svg>
+          </div>
+        </div>
+        <div>
+          <p class="muted"><b>Framework</b>: el framework posee el ciclo de vida y “te enchufas” en sus puntos de extensión.</p>
+          <div class="svg-wrap">
+            <svg viewBox="0 0 520 190" width="100%" height="auto" aria-label="Esquema de control del flujo con framework">
+              <rect x="20" y="25" width="190" height="50" rx="10" fill="#1f2a44" stroke="#34d399"/>
+              <text x="48" y="56" fill="#d4ffee" font-size="14" font-weight="700">Framework</text>
+              <rect x="310" y="25" width="190" height="50" rx="10" fill="#1f2a44" stroke="#34d399"/>
+              <text x="345" y="56" fill="#d4ffee" font-size="14" font-weight="700">Tu código</text>
+              <defs>
+                <marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="#34d399"/>
+                </marker>
+              </defs>
+              <line x1="210" y1="50" x2="310" y2="50" stroke="#34d399" stroke-width="3" marker-end="url(#arrow2)"/>
+              <text x="225" y="42" fill="#86efac" font-size="12">invoca</text>
+              <rect x="20" y="110" width="480" height="50" rx="10" fill="#0b1020" stroke="rgba(148,163,184,.35)"/>
+              <text x="40" y="141" fill="#e2e8f0" font-size="13">El ciclo de vida manda (routing, eventos, render, etc.)</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Alcance (capas) -->
+    <section class="card hover-up" style="margin-top:20px">
+      <div class="kicker">Capas</div>
+      <h2>Alcance típico</h2>
+      <p class="muted">Las librerías suelen cubrir una parte; los frameworks abarcan varias capas.</p>
+      <div class="grid cols-2" style="margin-top:10px">
+        <div class="svg-wrap">
+          <svg viewBox="0 0 520 240" width="100%" height="auto" aria-label="Capas cubiertas por una librería">
+            <text x="18" y="26" fill="#cfe3ff" font-size="15" font-weight="700">Librería</text>
+            <!-- stack -->
+            <rect x="30" y="50" width="460" height="28" rx="6" fill="#0b1020" stroke="rgba(148,163,184,.3)"/>
+            <text x="45" y="68" fill="#e2e8f0" font-size="12">UI / Componentes</text>
+            <rect x="30" y="84" width="460" height="28" rx="6" fill="#0b1020" stroke="rgba(148,163,184,.3)"/>
+            <text x="45" y="102" fill="#e2e8f0" font-size="12">Routing</text>
+            <rect x="30" y="118" width="460" height="28" rx="6" fill="#0b1020" stroke="rgba(148,163,184,.3)"/>
+            <text x="45" y="136" fill="#e2e8f0" font-size="12">Estado</text>
+            <rect x="30" y="152" width="460" height="28" rx="6" fill="#0b1020" stroke="rgba(148,163,184,.3)"/>
+            <text x="45" y="170" fill="#e2e8f0" font-size="12">ORM / Datos</text>
+            <rect x="30" y="186" width="460" height="28" rx="6" fill="#60a5fa" stroke="#93c5fd"/>
+            <text x="45" y="204" fill="#0b1220" font-size="12" font-weight="700">Utilidad específica (p. ej., peticiones, gráficos…)</text>
+          </svg>
+        </div>
+        <div class="svg-wrap">
+          <svg viewBox="0 0 520 240" width="100%" height="auto" aria-label="Capas cubiertas por un framework">
+            <text x="18" y="26" fill="#d4ffee" font-size="15" font-weight="700">Framework</text>
+            <rect x="30" y="50" width="460" height="28" rx="6" fill="#34d399" stroke="#86efac"/>
+            <text x="45" y="68" fill="#052014" font-size="12" font-weight="700">UI / Componentes</text>
+            <rect x="30" y="84" width="460" height="28" rx="6" fill="#22c55e" stroke="#86efac"/>
+            <text x="45" y="102" fill="#052014" font-size="12" font-weight="700">Routing</text>
+            <rect x="30" y="118" width="460" height="28" rx="6" fill="#10b981" stroke="#86efac"/>
+            <text x="45" y="136" fill="#052014" font-size="12" font-weight="700">Estado</text>
+            <rect x="30" y="152" width="460" height="28" rx="6" fill="#059669" stroke="#86efac"/>
+            <text x="45" y="170" fill="#eafff6" font-size="12" font-weight="700">ORM / Datos</text>
+            <rect x="30" y="186" width="460" height="28" rx="6" fill="#047857" stroke="#86efac"/>
+            <text x="45" y="204" fill="#eafff6" font-size="12" font-weight="700">Build / Tests / CLI</text>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comparativa -->
+    <section class="card hover-up" style="margin-top:20px">
+      <div class="kicker">Comparativa</div>
+      <h2>Diferencias clave</h2>
+      <div class="cmp" role="table" aria-label="Tabla comparativa">
+        <div class="row head">
+          <div>Aspecto</div><div>Librería</div><div>Framework</div>
+        </div>
+        <div class="row">
+          <div>Control del flujo</div><div>Tú llamas a la librería</div><div>El framework te llama (IoC)</div>
+        </div>
+        <div class="row">
+          <div>Opinión/convenciones</div><div>Baja</div><div>Alta (estructura, nombres)</div>
+        </div>
+        <div class="row">
+          <div>Alcance</div><div>Una necesidad concreta</div><div>Varias capas y herramientas</div>
+        </div>
+        <div class="row">
+          <div>Aprendizaje</div><div>Rápido</div><div>Más pronunciado</div>
+        </div>
+        <div class="row">
+          <div>Acoplamiento</div><div>Bajo</div><div>Mayor (ecosistema)</div>
+        </div>
+        <div class="row">
+          <div>Tooling</div><div>Opcional/externo</div><div>CLI, dev-server, scaffolding</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Micro-frameworks y React -->
+    <section class="grid cols-2" style="margin-top:20px">
+      <article class="card hover-up">
+        <div class="kicker">Matices</div>
+        <h2>Micro‑frameworks</h2>
+        <p class="muted">Flask o Express opinan poco y se sienten como varias librerías coordinadas. Útiles para empezar rápido sin perder flexibilidad.</p>
+        <pre><code># Flask (Python)
+from flask import Flask
+app = Flask(__name__)
+
+@app.get("/")
+def home():
+    return "Hola, web"
+
+app.run()</code></pre>
+      </article>
+      <article class="card hover-up">
+        <div class="kicker">Matices</div>
+        <h2>¿React es framework?</h2>
+        <p class="muted"><b>React</b> es una librería de UI, pero con Next.js/Remix y tooling alrededor, la experiencia es “tipo framework”.</p>
+        <pre><code>// React (JS)
+function Button({ onClick, children }){
+  return &lt;button onClick={onClick}&gt;{children}&lt;/button&gt;
+}
+// Tú controlas cuándo y cómo usarlo</code></pre>
+      </article>
+    </section>
+
+    <!-- Árbol de decisión -->
+    <section class="card hover-up" style="margin-top:20px">
+      <div class="kicker">Elección</div>
+      <h2>Árbol de decisión (simplificado)</h2>
+      <div class="svg-wrap">
+        <svg viewBox="0 0 960 260" width="100%" height="auto" aria-label="Árbol de decisión">
+          <!-- nodes -->
+          <rect x="30" y="30" width="240" height="46" rx="10" fill="#1f2a44" stroke="rgba(96,165,250,.6)"/>
+          <text x="50" y="58" fill="#e2e8f0" font-size="13">¿Necesidad puntual / componente?</text>
+
+          <rect x="355" y="20" width="220" height="40" rx="10" fill="#0b1020" stroke="rgba(148,163,184,.35)"/>
+          <text x="385" y="45" fill="#cbd5e1" font-size="12">Sí → Usa librerías</text>
+
+          <rect x="355" y="80" width="220" height="40" rx="10" fill="#0b1020" stroke="rgba(148,163,184,.35)"/>
+          <text x="365" y="105" fill="#cbd5e1" font-size="12">No → ¿Producto completo?</text>
+
+          <rect x="620" y="60" width="300" height="40" rx="10" fill="#0b1020" stroke="rgba(148,163,184,.35)"/>
+          <text x="640" y="85" fill="#cbd5e1" font-size="12">Sí, equipo y plazos → Framework</text>
+
+          <rect x="620" y="125" width="300" height="40" rx="10" fill="#0b1020" stroke="rgba(148,163,184,.35)"/>
+          <text x="640" y="150" fill="#cbd5e1" font-size="12">Duda / ligereza → Micro‑framework</text>
+
+          <!-- arrows -->
+          <defs>
+            <marker id="arr3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#60a5fa"/>
+            </marker>
+          </defs>
+          <line x1="270" y1="53" x2="355" y2="40" stroke="#60a5fa" stroke-width="2.5" marker-end="url(#arr3)"/>
+          <line x1="270" y1="53" x2="355" y2="100" stroke="#60a5fa" stroke-width="2.5" marker-end="url(#arr3)"/>
+          <line x1="575" y1="100" x2="620" y2="80" stroke="#60a5fa" stroke-width="2.5" marker-end="url(#arr3)"/>
+          <line x1="575" y1="100" x2="620" y2="145" stroke="#60a5fa" stroke-width="2.5" marker-end="url(#arr3)"/>
+        </svg>
+      </div>
+      <details style="margin-top:10px">
+        <summary><b>Checklist rápido</b></summary>
+        <ul style="margin:8px 0 0 18px">
+          <li>Proyecto pequeño o una función clara → <b>librerías</b>.</li>
+          <li>Producto completo, equipos y estándares → <b>framework</b>.</li>
+          <li>Necesitas velocidad sin ataduras → <b>micro‑framework</b>.</li>
+          <li>Maximizar libertad arquitectónica → <b>librerías</b>.</li>
+        </ul>
+      </details>
+    </section>
+
+    <!-- Glosario -->
+    <section class="card hover-up" style="margin-top:20px">
+      <div class="kicker">Glosario</div>
+      <h2>Tres conceptos para recordar</h2>
+      <div class="grid cols-2">
+        <div class="note"><b>Inversión de Control (IoC):</b> el framework controla el flujo y llama a tu código en puntos de extensión.</div>
+        <div class="note"><b>Principio de Hollywood:</b> “Don’t call us, we’ll call you”.</div>
+      </div>
+      <div class="note" style="margin-top:10px"><b>Tooling:</b> herramientas integradas (CLI, dev server, scaffolding, pruebas, build) que aceleran el trabajo en frameworks.</div>
+      <p class="foot">Consejo: empieza pequeño y evoluciona hacia frameworks cuando el producto y el equipo lo pidan.</p>
+    </section>
+
+    <p class="center" style="margin-top:26px">
+      <a class="btn" href="#" onclick="window.print();return false;">🖨️ Imprimir / Guardar como PDF</a>
+    </p>
+  </main>
+</body>
+</html>

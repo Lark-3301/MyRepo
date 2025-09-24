@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tipografía y texto + Colores y fondos — Guía visual</title>
+<style>
+:root{
+  --ink:#0b1220; --muted:#94a3b8; --paper:#0b1220; --bg:#0f172a;
+  --line:#1f2a44; --soft:#0d1628;
+  --mono: ui-monospace, Menlo, Consolas, "Liberation Mono", monospace;
+  --sans: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --a:#22c55e; --b:#3b82f6; --c:#e11d48; --d:#f59e0b; --e:#06b6d4; --f:#8b5cf6;
+}
+*{ box-sizing:border-box; }
+html{ color-scheme: dark; }
+body{
+  margin:0; background: radial-gradient(1200px 800px at 20% -10%, #1e293b 0%, #0f172a 40%, #0b1220 100%);
+  color:#e5e7eb; font: 400 16px/1.6 var(--sans);
+}
+.wrap{ max-width: 1160px; margin: 0 auto; padding: 28px; }
+.header{ display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:18px; }
+h1{ margin:0; font-size: clamp(1.6rem, 2.8vw, 2.4rem); letter-spacing:.2px; }
+.lead{ color:#b8c4dd; margin:.25rem 0 0 0; max-width: 75ch; }
+.btn{
+  background: linear-gradient(135deg, var(--a), var(--b)); color:#021018;
+  border:none; padding:.7rem 1rem; border-radius:999px; font-weight:800; cursor:pointer;
+  box-shadow: 0 10px 24px -12px rgba(34,197,94,.6), 0 10px 24px -12px rgba(59,130,246,.6);
+}
+.grid{ display:grid; grid-template-columns: 300px 1fr; gap:18px; }
+@media (max-width: 980px){ .grid{ grid-template-columns: 1fr; } nav{ position: static; top:auto; } }
+
+nav{
+  position: sticky; top: 12px;
+  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+  border:1px solid var(--line); border-radius:16px; padding:16px;
+  box-shadow: 0 18px 38px -22px rgba(10,10,10,.75), inset 0 1px 0 rgba(255,255,255,.06);
+  backdrop-filter: blur(6px);
+}
+nav h3{ margin:.2rem 0 .4rem 0; font-size:1rem; color:#cfe0ff; }
+nav a{ display:block; color:#c0ccef; text-decoration:none; padding:.35rem .5rem; border-radius:10px; }
+nav a:hover{ background:#0d1a2f; }
+
+.section{
+  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+  border:1px solid var(--line); border-radius:16px; padding:18px;
+  box-shadow: 0 18px 38px -22px rgba(10,10,10,.75), inset 0 1px 0 rgba(255,255,255,.06);
+  backdrop-filter: blur(6px);
+}
+.section h2{ font-size:1.35rem; margin:.1rem 0 .4rem 0; }
+.section .desc{ color:var(--muted); margin-top:-.35rem; }
+h3{ margin: .9rem 0 .35rem; font-size:1.05rem; color:#eaf1ff; }
+
+pre, code{ font-family: var(--mono); }
+pre.code{
+  background: #0b1b33; border:1px solid #0e2345; border-radius:12px; padding:.8rem; overflow:auto; font-size:.95rem; color:#dbf1ff;
+  box-shadow: inset 0 0 40px rgba(0,0,0,.25);
+}
+.diagram{
+  background: linear-gradient(180deg, rgba(6,182,212,.08), transparent);
+  border:1px solid #233257; border-radius:14px; padding:12px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.05);
+}
+.badge{ display:inline-block; background:#0e223f; color:#bbd3ff; border:1px solid #26406e; padding:.15rem .5rem; border-radius:999px; font-weight:800; font-size:.8rem; }
+.note{ color:#a8b3cf; font-size:.92rem; }
+
+.kbd{ border:1px solid #2c3e67; background:#102142; padding:.1rem .4rem; border-radius:6px; font-family:var(--mono); }
+
+/* --- Tipografía --- */
+.demo-fonts{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+.font-card{ background:#0b1b33; border:1px solid #0e2345; border-radius:12px; padding:12px; }
+.font-stack{ display:grid; gap:6px; }
+.stack-line{ padding:.4rem .6rem; border-radius:10px; background:#0f2547; border:1px solid #1f3b6a; }
+.stack-line .name{ display:inline-block; min-width:140px; opacity:.8; }
+.sample{ font-weight:700; letter-spacing:.2px; }
+
+.size-scale{ display:flex; flex-wrap:wrap; gap:10px; align-items:flex-end; }
+.size-scale .s{ background:#0f2547; border:1px solid #1f3b6a; border-radius:10px; padding:.25rem .5rem; }
+.size-scale .s.xs{ font-size:.75rem; }
+.size-scale .s.sm{ font-size:.875rem; }
+.size-scale .s.base{ font-size:1rem; }
+.size-scale .s.lg{ font-size:1.125rem; }
+.size-scale .s.xl{ font-size:1.25rem; }
+.size-scale .s.XXL{ font-size:clamp(1.6rem,2.8vw,2.2rem); font-weight:900; }
+
+.weights{ display:flex; flex-wrap:wrap; gap:10px; }
+.w{ background:#132a51; border:1px solid #234170; border-radius:10px; padding:.25rem .5rem; }
+.italic{ font-style: italic; }
+
+.leading-demo{ background:#0b1b33; border:1px solid #0e2345; border-radius:12px; padding:10px; position:relative; }
+.leading-demo .line{ position:relative; margin:.35rem 0; padding:.2rem; }
+.leading-demo .line.small{ line-height:1.1; }
+.leading-demo .line.base{ line-height:1.5; }
+.leading-demo .line.loose{ line-height:1.9; }
+.leading-demo .line::before{ content:""; position:absolute; left:0; right:0; top:0; height:1px; background:#284071; opacity:.6; }
+.leading-demo .line::after{ content:""; position:absolute; left:0; right:0; bottom:0; height:1px; background:#284071; opacity:.6; }
+
+.tracking-demo{ display:flex; flex-wrap:wrap; gap:10px; }
+.track{ background:#132a51; border:1px solid #234170; border-radius:10px; padding:.25rem .5rem; }
+.t0{ letter-spacing:0; } .t1{ letter-spacing:.04em; } .t2{ letter-spacing:.12em; }
+
+.align-demo{ display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; }
+.align-demo .a{ background:#0b1b33; border:1px solid #0e2345; border-radius:12px; padding:10px; height:96px; }
+.align-demo .a p{ margin:0; }
+.align-demo .left{ text-align:left; }
+.align-demo .center{ text-align:center; }
+.align-demo .right{ text-align:right; }
+.align-demo .justify{ text-align:justify; }
+
+.transform-demo{ display:flex; gap:10px; flex-wrap:wrap; }
+.transform-demo .t{ background:#132a51; border:1px solid #234170; border-radius:999px; padding:.3rem .7rem; }
+.upper{ text-transform: uppercase; } .lower{ text-transform: lowercase; } .cap{ text-transform: capitalize; }
+
+.decoration-demo{ display:flex; gap:10px; flex-wrap:wrap; }
+.u{ text-decoration: underline; } .o{ text-decoration: overline; } .s{ text-decoration: line-through; }
+.decoration-demo .t{ background:#132a51; border:1px solid #234170; border-radius:999px; padding:.3rem .7rem; }
+
+/* --- Colores --- */
+.swatches{ display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; }
+.sw{ height:72px; border-radius:12px; border:1px solid #0e2345; display:flex; align-items:center; justify-content:center; font-weight:900; }
+.hex{ background:#ef4444; } .rgb{ background: rgb(34,197,94); } .hsl{ background: hsl(220 80% 52%); } .transp{ background: repeating-linear-gradient(45deg, #ffffff22 0 10px, #00000022 10px 20px); }
+
+/* fondos */
+.bg-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+.bg-card{ background:#0b1b33; border:1px solid #0e2345; border-radius:12px; padding:10px; }
+.tile{ height:120px; border-radius:12px; border:1px solid #284071;
+  background:
+    radial-gradient(30px 30px at 20px 20px, color-mix(in srgb, var(--e) 35%, transparent), transparent 60%),
+    repeating-linear-gradient(45deg, color-mix(in srgb, var(--e) 10%, transparent) 0 10px, transparent 10px 20px);
+}
+.cover{ height:120px; border-radius:12px; border:1px solid #284071;
+  background-image: linear-gradient(#00000055, #00000033), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="420" height="220"><rect width="420" height="220" fill="%23222"/><text x="28" y="118" font-size="28" fill="%23bbb">imagen</text></svg>');
+  background-size: cover; background-position: center;
+}
+.contain{ height:120px; border-radius:12px; border:1px solid #284071;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="420" height="220"><rect width="420" height="220" fill="%23222"/><text x="28" y="118" font-size="28" fill="%23bbb">imagen</text></svg>');
+  background-size: contain; background-repeat:no-repeat; background-position: left top;
+}
+.pos-demo{ display:grid; grid-template-columns: repeat(4,1fr); gap:8px; }
+.pos{ height:78px; border:1px solid #284071; border-radius:10px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="90"><rect width="160" height="90" fill="%23666"/><circle cx="80" cy="45" r="20" fill="%23ddd"/></svg>');
+  background-repeat: no-repeat;
+}
+.p-center{ background-position: center; }
+.p-top{ background-position: top; }
+.p-right{ background-position: right; }
+.p-xy{ background-position: 20% 70%; }
+
+/* sombras / filtros */
+.fx-grid{ display:grid; grid-template-columns: 1fr 1fr 1fr; gap:12px; }
+.card{ background:#0b1b33; border:1px solid #0e2345; border-radius:12px; padding:12px; text-align:center; }
+.shadow{ box-shadow: 0 22px 44px -18px rgba(0,0,0,.55), 0 10px 24px -12px rgba(59,130,246,.35); }
+.textshadow{ text-shadow: 0 2px 8px rgba(59,130,246,.6); font-size:1.4rem; font-weight:900; }
+.filter img{ width:100%; border-radius:10px; border:1px solid #284071; }
+.f-grayscale{ filter: grayscale(100%); }
+.f-blur{ filter: blur(2px); }
+.f-contrast{ filter: contrast(130%) brightness(110%); }
+
+/* code block titles */
+h4.code-title{ margin:.6rem 0 .2rem; color:#bfe6ff; font-size:.95rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div>
+      <h1>Tipografía y texto <span style="opacity:.75">+</span> Colores y fondos</h1>
+      <p class="lead">Propiedades clave de texto (<strong>font-family, font-size, font-weight, font-style</strong>, <strong>line-height</strong>, <strong>letter-spacing</strong>, <strong>text-align</strong>, <strong>text-transform</strong>, <strong>text-decoration</strong>) y de color/fondos (<strong>#hex, rgb(), hsl(), transparent</strong>; <strong>background*</strong>; <strong>box-shadow, text-shadow, filter</strong>), con diagramas y ejemplos.</p>
+    </div>
+    <button class="btn" onclick="window.print()">Imprimir / PDF</button>
+  </div>
+
+  <div class="grid">
+    <nav>
+      <h3>Índice</h3>
+      <a href="#tipo">1. Tipografía y texto</a>
+      <a href="#colores">2. Colores</a>
+      <a href="#fondos">3. Fondos (background*)</a>
+      <a href="#sombras">4. Sombras y filtros</a>
+      <a href="#snippets">5. Snippets resumidos</a>
+    </nav>
+
+    <main class="stack">
+      <!-- 1) Tipografía y texto -->
+      <section id="tipo" class="section">
+        <h2>1) Tipografía y texto</h2>
+        <p class="desc">Base de legibilidad: familia, tamaño, peso, estilo y composición (interlineado, tracking, alineación, transformación y decoración).</p>
+
+        <h3>Familias (<code>font-family</code>) y pila de fallbacks</h3>
+        <div class="diagram demo-fonts">
+          <div class="font-card">
+            <div class="font-stack">
+              <div class="stack-line" style="font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;"><span class="name">Sistema</span> <span class="sample">Interfaz moderna</span></div>
+              <div class="stack-line" style="font-family: Georgia, 'Times New Roman', serif;"><span class="name">Serif</span> <span class="sample">Lectura clásica</span></div>
+              <div class="stack-line" style="font-family: 'Courier New', Courier, monospace;"><span class="name">Monospace</span> <span class="sample">Código & datos</span></div>
+            </div>
+          </div>
+          <div class="font-card">
+            <p class="note">Especifica varias fuentes en orden: el navegador usa la primera disponible. Ej.: <code>font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;</code></p>
+          </div>
+        </div>
+
+        <h3>Tamaño (<code>font-size</code>)</h3>
+        <div class="diagram size-scale">
+          <span class="s xs">.75rem</span>
+          <span class="s sm">.875rem</span>
+          <span class="s base">1rem</span>
+          <span class="s lg">1.125rem</span>
+          <span class="s xl">1.25rem</span>
+          <span class="s XXL">clamp(1.6rem, 2.8vw, 2.2rem)</span>
+        </div>
+
+        <h3>Peso y estilo (<code>font-weight</code>, <code>font-style</code>)</h3>
+        <div class="diagram weights">
+          <span class="w" style="font-weight:300">300 (Light)</span>
+          <span class="w" style="font-weight:400">400 (Normal)</span>
+          <span class="w" style="font-weight:600">600 (SemiBold)</span>
+          <span class="w" style="font-weight:700">700 (Bold)</span>
+          <span class="w italic" style="font-weight:400">Italic</span>
+        </div>
+
+        <h3>Interlineado (<code>line-height</code>)</h3>
+        <div class="diagram leading-demo">
+          <div class="line small">line-height: 1.1 — más compacto</div>
+          <div class="line base">line-height: 1.5 — legible para párrafos</div>
+          <div class="line loose">line-height: 1.9 — aireado</div>
+        </div>
+
+        <h3>Tracking (<code>letter-spacing</code>)</h3>
+        <div class="diagram tracking-demo">
+          <span class="track t0">Letter</span>
+          <span class="track t1">Letter</span>
+          <span class="track t2">Letter</span>
+        </div>
+
+        <h3>Alineación (<code>text-align</code>)</h3>
+        <div class="diagram align-demo">
+          <div class="a left"><p>left</p></div>
+          <div class="a center"><p>center</p></div>
+          <div class="a right"><p>right</p></div>
+          <div class="a justify"><p>justify — distribuye el espacio como en prensa tradicional.</p></div>
+        </div>
+
+        <h3>Transformación (<code>text-transform</code>)</h3>
+        <div class="diagram transform-demo">
+          <span class="t upper">upper case</span>
+          <span class="t lower">LOWER CASE</span>
+          <span class="t cap">título en español</span>
+        </div>
+
+        <h3>Decoración (<code>text-decoration</code>)</h3>
+        <div class="diagram decoration-demo">
+          <span class="t u">underline</span>
+          <span class="t o">overline</span>
+          <span class="t s">line-through</span>
+        </div>
+
+        <h4 class="code-title">Código</h4>
+        <pre class="code">:root { --font: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+body { font: 400 16px/1.55 var(--font); letter-spacing: .2px; }
+h1 { font-weight: 700; text-transform: uppercase; }
+p.note { line-height: 1.6; }
+.title-tight { letter-spacing: .04em; }
+.center { text-align: center; }
+.badge { text-transform: capitalize; text-decoration: underline; }</pre>
+      </section>
+
+      <!-- 2) Colores -->
+      <section id="colores" class="section">
+        <h2>2) Colores: <code>#hex</code>, <code>rgb()</code>, <code>hsl()</code>, <code>transparent</code></h2>
+        <p class="desc">Cuatro formas comunes de definir color. <code>transparent</code> deja pasar el fondo. HSL es muy útil para crear paletas.</p>
+        <div class="diagram swatches">
+          <div class="sw hex">#ef4444</div>
+          <div class="sw rgb">rgb(34, 197, 94)</div>
+          <div class="sw hsl">hsl(220 80% 52%)</div>
+          <div class="sw transp">transparent</div>
+        </div>
+        <h4 class="code-title">Código</h4>
+        <pre class="code">h1 { color: #0ea5e9; }
+.ok { color: rgb(22,163,74); }
+.brand { color: hsl(220 90% 55% / 1); } /* admite alfa: hsl(h s l / a) */
+.muted { color: transparent; }</pre>
+      </section>
+
+      <!-- 3) Fondos -->
+      <section id="fondos" class="section">
+        <h2>3) Fondos: <code>background*</code></h2>
+        <p class="desc">Capas de fondo: color, imágenes, gradientes. Controla tamaño, posición y repetición.</p>
+        <div class="diagram bg-grid">
+          <div class="bg-card">
+            <h3 style="margin-top:0">Repetición (tile)</h3>
+            <div class="tile"></div>
+            <p class="note" style="margin-top:6px;">Patrón generado con gradientes + <code>repeating-linear-gradient</code>.</p>
+          </div>
+          <div class="bg-card">
+            <h3 style="margin-top:0">Imagen: <code>cover</code></h3>
+            <div class="cover"></div>
+            <p class="note" style="margin-top:6px;"><code>background-size: cover</code> recorta para cubrir; centrado con <code>background-position: center</code>.</p>
+          </div>
+          <div class="bg-card">
+            <h3 style="margin-top:0">Imagen: <code>contain</code></h3>
+            <div class="contain"></div>
+            <p class="note" style="margin-top:6px;"><code>contain</code> ajusta manteniendo proporción sin recorte; puedes fijar la posición.</p>
+          </div>
+          <div class="bg-card">
+            <h3 style="margin-top:0">Posición</h3>
+            <div class="pos-demo">
+              <div class="pos p-center"></div>
+              <div class="pos p-top"></div>
+              <div class="pos p-right"></div>
+              <div class="pos p-xy"></div>
+            </div>
+          </div>
+        </div>
+        <h4 class="code-title">Código</h4>
+        <pre class="code">.hero {
+  background:
+    linear-gradient(#0005, #0003),
+    url(header.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}</pre>
+      </section>
+
+      <!-- 4) Sombras / filtros -->
+      <section id="sombras" class="section">
+        <h2>4) Sombras y filtros: <code>box-shadow</code>, <code>text-shadow</code>, <code>filter</code></h2>
+        <p class="desc">Profundidad y efectos visuales. <code>box-shadow</code> admite múltiples capas; <code>text-shadow</code> resalta títulos; <code>filter</code> transforma una imagen ya renderizada.</p>
+        <div class="diagram fx-grid">
+          <div class="card shadow">box-shadow</div>
+          <div class="card"><span class="textshadow">text-shadow</span></div>
+          <div class="card filter">
+            <img class="f-grayscale" alt="demo" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='220'><defs><linearGradient id='g' x1='0' x2='1'><stop offset='0' stop-color='%23f59e0b'/><stop offset='1' stop-color='%2364a5ff'/></linearGradient></defs><rect width='420' height='220' fill='url(%23g)'/></svg>">
+            <p class="note" style="margin:.4rem 0 0">filter: <code>grayscale(100%)</code></p>
+          </div>
+        </div>
+        <div class="diagram fx-grid" style="margin-top:10px;">
+          <div class="card filter">
+            <img class="f-blur" alt="demo" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='220'><rect width='420' height='220' fill='%23222'/><text x='28' y='118' font-size='28' fill='%23bbb'>blur</text></svg>">
+            <p class="note" style="margin:.4rem 0 0">filter: <code>blur(2px)</code></p>
+          </div>
+          <div class="card filter">
+            <img class="f-contrast" alt="demo" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='220'><rect width='420' height='220' fill='%230a2647'/><circle cx='210' cy='110' r='60' fill='%2316a34a'/></svg>">
+            <p class="note" style="margin:.4rem 0 0">filter: <code>contrast(130%) brightness(110%)</code></p>
+          </div>
+          <div class="card">
+            <p class="note" style="margin:.4rem 0 0">Consejo: evita filtros pesados en móviles o anima con cuidado.</p>
+          </div>
+        </div>
+        <h4 class="code-title">Código</h4>
+        <pre class="code">.card { box-shadow: 0 22px 44px -18px rgba(0,0,0,.45), 0 10px 24px -12px rgba(59,130,246,.35); }
+h1 { text-shadow: 0 2px 10px rgba(0,0,0,.3); }
+img.thumb { filter: grayscale(100%) contrast(110%); }</pre>
+      </section>
+
+      <!-- 5) Snippets -->
+      <section id="snippets" class="section">
+        <h2>5) Snippets resumidos</h2>
+        <pre class="code">/* Tipografía base */
+:root { --font: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+body  { font: 400 16px/1.6 var(--font); letter-spacing:.2px; }
+
+/* Colores */
+.title { color: hsl(220 90% 55%); }
+.muted { color: rgb(100 116 139); }
+
+/* Fondos */
+.hero {
+  background: linear-gradient(#0005, #0003), url(header.jpg);
+  background-size: cover; background-position: center; background-repeat: no-repeat;
+}
+
+/* Sombras/Filtros */
+.card { box-shadow: 0 10px 30px -12px rgba(0,0,0,.45); }
+h1   { text-shadow: 0 2px 8px rgba(0,0,0,.3); }
+img  { filter: grayscale(100%); }</pre>
+      </section>
+    </main>
+  </div>
+
+  <p class="note" style="margin-top:14px;">Tip: usa escalas de <span class="kbd">font-size</span> y <span class="kbd">line-height</span> consistentes, y construye tu paleta con <span class="kbd">HSL</span> para variar tono/saturación/luz de forma sistemática.</p>
+
+</div>
+</body>
+</html>
