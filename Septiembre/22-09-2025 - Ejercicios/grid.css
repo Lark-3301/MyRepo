@@ -1,0 +1,15 @@
+.mycontainer {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    border: 5px solid goldenrod;
+    background-color: bisque;
+    padding: 5px;
+
+    text-align: center;
+    font-size: 30px;
+}
+
+.mycontainer > div {
+    border: 2px solid black;
+
+}
