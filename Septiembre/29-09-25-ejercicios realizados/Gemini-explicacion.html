@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Síntesis de la Conversación: HTML, CSS y JS</title>
+    <style>
+        /* Estilos generales para hacer la página más legible */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #1a237e;
+            border-bottom: 2px solid #c5cae9;
+            padding-bottom: 10px;
+        }
+        code {
+            background-color: #e8eaf6;
+            color: #3f51b5;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        pre {
+            background-color: #282c34;
+            color: #abb2bf;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+        pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+        }
+        .highlight {
+            color: #ffab40;
+        }
+        .comment {
+            color: #7f848e;
+        }
+        .keyword {
+            color: #c678dd;
+        }
+        .string {
+            color: #98c379;
+        }
+        .property {
+            color: #d19a66;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        .final-example {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Síntesis de Nuestra Conversación sobre HTML, CSS y JavaScript</h1>
+        <p>Este documento resume los conceptos clave que hemos cubierto, desde la estructura básica de una página web hasta la manipulación interactiva con JavaScript.</p>
+
+        <!-- SECCIÓN 1: EL EJERCICIO PRÁCTICO -->
+        <h2>1. El Ejercicio Práctico: Alternar el Color de un Div</h2>
+        <p>El objetivo era crear una página con un botón que, al ser pulsado, cambiara el color de fondo de un `div`. Esta tarea nos sirvió para explorar la interacción entre los tres pilares de la web.</p>
+        
+        <div class="final-example">
+            <h3>Resultado Final del Ejercicio</h3>
+            <p><strong>HTML (index.html):</strong> La estructura de la página.</p>
+            <pre><code><span class="keyword">&lt;!DOCTYPE html&gt;</span>
+&lt;html <span class="property">lang=</span><span class="string">"es"</span>&gt;
+&lt;head&gt;
+    <span class="comment">&lt;!-- Metadatos esenciales --&gt;</span>
+    &lt;meta <span class="property">charset=</span><span class="string">"UTF-8"</span>&gt;
+    &lt;meta <span class="property">name=</span><span class="string">"viewport"</span> <span class="property">content=</span><span class="string">"width=device-width, initial-scale=1.0"</span>&gt;
+    &lt;title&gt;Ejercicio Día 01&lt;/title&gt;
+    <span class="comment">&lt;!-- Enlace fundamental para conectar con la hoja de estilos CSS --&gt;</span>
+    &lt;link <span class="property">rel=</span><span class="string">"stylesheet"</span> <span class="property">href=</span><span class="string">"style.css"</span>&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    <span class="comment">&lt;!-- El botón que dispara la acción con el evento onclick --&gt;</span>
+    &lt;button <span class="property">onclick=</span><span class="string">"changeColor()"</span>&gt;Cambia color&lt;/button&gt;
+
+    <span class="comment">&lt;!-- El div al que afectará el cambio. Tiene un 'id' para ser encontrado por JS --&gt;</span>
+    &lt;div <span class="property">id=</span><span class="string">"caja-colorida"</span>&gt;Este es un div&lt;/div&gt;
+
+    <span class="comment">&lt;!-- El script se coloca al final para asegurar que el HTML se haya cargado primero --&gt;</span>
+    &lt;script <span class="property">src=</span><span class="string">"script.js"</span>&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </code></pre>
+
+            <p><strong>CSS (style.css):</strong> Las reglas de estilo y apariencia.</p>
+            <pre><code><span class="comment">/* Estilos aplicados a toda la página a través de la etiqueta body */</span>
+<span class="keyword">body</span> {
+    <span class="property">font-family:</span> 'Courier New', Courier, monospace;
+    <span class="property">font-size:</span> 16px;
+}
+
+<span class="comment">/* Estilo inicial del div, seleccionado por su ID único */</span>
+<span class="keyword">#caja-colorida</span> {
+    <span class="property">background-color:</span> rgb(173, 211, 173); <span class="comment">/* Color de fondo verde inicial */</span>
+    <span class="property">border:</span> 5px solid black;
+    <span class="property">padding:</span> 10px;
+    <span class="property">margin-top:</span> 20px;
+    <span class="comment">/* Esto hace que la caja se ajuste al contenido pero en su propia línea */</span>
+    <span class="property">width:</span> fit-content; 
+}
+
+<span class="comment">/* Clase CSS que se añadirá y quitará con JavaScript */</span>
+<span class="keyword">.blue-bg</span> {
+    <span class="property">background-color:</span> aqua;
+}
+            </code></pre>
+            
+            <p><strong>JavaScript (script.js):</strong> La lógica interactiva.</p>
+            <pre><code><span class="comment">// Se declara la función que será llamada por el botón</span>
+<span class="keyword">function</span> <span class="highlight">changeColor</span>() {
+    <span class="comment">// 1. Seleccionamos el elemento del DOM usando su ID</span>
+    <span class="keyword">const</span> miDiv = document.getElementById(<span class="string">'caja-colorida'</span>);
+
+    <span class="comment">// 2. Usamos el método 'toggle' para alternar la clase 'blue-bg'</span>
+    miDiv.classList.toggle(<span class="string">'blue-bg'</span>);
+}
+            </code></pre>
+        </div>
+
+        <!-- SECCIÓN 2: CONCEPTOS CSS -->
+        <h2>2. Conceptos Clave de CSS</h2>
+        <ul>
+            <li><strong>Selectores:</strong> Son la forma en que "apuntamos" a los elementos HTML.
+                <ul>
+                    <li><strong>Por etiqueta:</strong> <code>body { ... }</code> - Afecta a todas las etiquetas de ese tipo.</li>
+                    <li><strong>Por ID:</strong> <code>#caja-colorida { ... }</code> - Afecta al ÚNICO elemento con ese <code>id</code>. Se usa para elementos específicos.</li>
+                    <li><strong>Por Clase:</strong> <code>.blue-bg { ... }</code> - Afecta a TODOS los elementos que tengan esa <code>class</code>. Se usa para estilos reutilizables.</li>
+                </ul>
+            </li>
+            <li><strong>El Modelo de Cajas (Box Model):</strong> Descubrimos que los elementos como <code>&lt;div&gt;</code> son por defecto <code>display: block</code>. Esto significa que ocupan todo el ancho disponible, como un libro en una estantería, empujando a otros elementos debajo.</li>
+            <li><strong>La Propiedad <code>display</code>:</strong> Para controlar este comportamiento, aprendimos sobre:
+                <ul>
+                    <li><code>display: block;</code>: Ocupa todo el ancho y se coloca en una nueva línea.</li>
+                    <li><code>display: inline;</code>: Ocupa solo el espacio de su contenido y se coloca al lado de otros, como palabras en una frase.</li>
+                    <li><code>display: inline-block;</code>: Un híbrido. Ocupa solo su espacio (como <code>inline</code>) pero respeta propiedades de caja como <code>padding</code> y <code>border</code> (como <code>block</code>).</li>
+                </ul>
+            </li>
+            <li><strong>Ajustar el Ancho:</strong> Vimos que <code>width: fit-content;</code> es una solución moderna y directa para hacer que un elemento de bloque ajuste su ancho al contenido que tiene dentro, sin dejar de ocupar su propia línea.</li>
+        </ul>
+
+        <!-- SECCIÓN 3: CONCEPTOS JAVASCRIPT -->
+        <h2>3. Profundizando en JavaScript (La Interacción)</h2>
+        <p>JavaScript es el cerebro que nos permite responder a las acciones del usuario.</p>
+        <ul>
+            <li><strong>El DOM (Document Object Model):</strong> Es la representación de nuestro HTML como un árbol de objetos. JavaScript puede interactuar con este árbol para modificar cualquier cosa de la página. La puerta de entrada es el objeto <code>document</code>.</li>
+            <li><strong>Seleccionar Elementos:</strong> La función <code>document.getElementById('id-del-elemento')</code> es la forma más rápida y segura de "agarrar" un elemento único del DOM para poder manipularlo.</li>
+            <li><strong>Desglose de <code>miDiv.classList.toggle('blue-bg')</code>:</strong>
+                <ol>
+                    <li><code>miDiv</code>: Es la <strong>variable</strong> que contiene el objeto del DOM (nuestro `div`). Es el "quién".</li>
+                    <li><code>.classList</code>: Es una <strong>propiedad</strong> de ese objeto. Nos da acceso a su lista de clases. Es el "qué parte".</li>
+                    <li><code>.toggle()</code>: Es un <strong>método</strong> (una acción) de <code>classList</code>. Actúa como un interruptor. Es el "qué hacer".</li>
+                    <li><code>('blue-bg')</code>: Es el <strong>argumento</strong> que le pasamos al método. Le dice al interruptor qué clase específica debe alternar. Es el "con qué".</li>
+                </ol>
+            </li>
+            <li><strong>Notación de Punto:</strong> La estructura <code>objeto.propiedad.metodo()</code> es la forma jerárquica y lógica de acceder a las capacidades de los objetos en JavaScript.</li>
+        </ul>
+    </div>
+</body>
+</html>
